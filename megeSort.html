@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Sort</title>
+    <style>
+        .content-box{
+            border: 1px solid #ccc; 
+            border-radius:5px; 
+            padding: 15px; 
+            margin: 15px 0;
+        }
+    </style>
+    <!-- <script src="index.js"></script> -->
+</head>
+<body>
+    <div class="content-box">
+        Enter List for sorting: <input type="text" id="listInput" size="60"/>
+        <button id="sortBtn">Sort the List</button>
+        <div id="outputDiv" class="content-box" style="display: none; border: none;">
+            Sorted List: <output id="output"></output>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById('sortBtn').addEventListener('click', sortList);
+    function sortList(){
+        console.log("Execution start");
+        const list = document.getElementById('listInput').value.split(',');
+        const sortedList = quickSort(list);
+        document.getElementById('output').innerText = sortedList;
+        document.getElementById('outputDiv').style.display = "block";
+        console.log("Execution end");
+    }
+
+    function quickSort(list){
+        let highIndex = list.length - 1;
+        const pivot = list[highIndex];
+        let lowArr = [], highArr = [];
+        for(i = 0; i<highIndex; i++){
+            if(Number(list[i])<=Number(pivot)){
+                lowArr.push(list[i]);
+            }else{
+                highArr.push(list[i]);
+            }
+        }
+        // console.log("pivot: "+pivot);
+        // console.log("lowArr: "+lowArr);
+        // console.log("highArr: "+highArr);
+        if(highIndex!=0){
+            let returnArr = [];
+            if(lowArr.length){
+                if(lowArr.length>1){
+                    returnArr.push(...quickSort(lowArr))
+                }else{
+                    returnArr.push(lowArr[0]);
+                }   
+            }
+            returnArr.push(pivot);
+            if(highArr.length){
+                if(highArr.length>1){
+                    returnArr.push(...quickSort(highArr))
+                }else{
+                    returnArr.push(highArr[0]);
+                }   
+            }
+            // console.log(returnArr);
+            return returnArr;
+        }else{
+            return pivot;
+        }
+    }
+</script>
+</html>
